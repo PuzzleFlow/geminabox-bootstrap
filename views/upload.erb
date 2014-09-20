@@ -1,0 +1,11 @@
+<% if @error %>
+  <div class="alert alert-danger"><%= @error %></div>
+<% end %>
+
+<form id="upload" class="form" method="POST" enctype="multipart/form-data"> 
+  <div class="form-group">
+    <label for="file">Select a gem to upload</label>
+    <input type="file" name="file" id="file" class="form-control">
+  </div>
+  <input type="submit" value="Upload" class="btn btn-success">
+</form>

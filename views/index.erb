@@ -1,0 +1,60 @@
+<p>If you did not need any credentials to get to this page</p>
+<p><pre><code>gem sources -a <%= url "/" %></code></pre></p>
+<p>If you needed some credentials to get to this page</p>
+<p><pre><code>gem sources -a <%= url.to_s.gsub('://','://username:password@') %></code></pre></p>
+<p>and then ...</p>
+<p><pre><code>gem install geminabox<br />gem inabox [gemfile]</code></pre></p>
+
+<% if @gems.any? %>
+  <div id="alpha_index"><ul class="pagination"><%= ("a".."z").map{|i| @index_gems.include?(i) ? "<li><a href='#jump_#{i}'>#{i}</a></li>" : "<li class='disabled'><a>#{i}</a></li>" }.join %></ul></div>
+
+  <div class="gemlist">
+
+    <% @gems.by_name do |name, versions| %>
+      <div class="panel panel-default" <%= %{id="jump_#{name[0..0].downcase}"} if @index_gems.delete(name[0..0].downcase) %> class="gem-version">
+        <div class="panel-heading"><h3 class="panel-title"><%= name %> (<%= versions.count == 1 ? versions.first.number : "#{versions.oldest.number} - #{versions.newest.number}" %>)</h3></div>
+        <%# <div class="panel-body"> %>
+          <table class="table">
+            <tbody>
+              <% versions.each.reverse_each.first(5).each do |version| %>
+                <tr>
+                  <td>
+                    <code>gem install <%= version.name %> <%= "--prerelease" if version.number.to_s.match(/[a-z]/i) %> -v "<%= version.number %>"</code>
+                    <% unless version.platform =~ /^ruby/i %>
+                      <small class="platform"><%= version.platform %></small>
+                    <% end %>
+                  </td>
+                  <td class="actions">
+                    <form class="delete-form" method="post" action="<%= url("/gems/#{version.gemfile_name}.gem") %>">
+                      <a class="download btn btn-sm btn-success" href="<%= url("/gems/#{version.gemfile_name}.gem") %>">Download</a>
+                      <input type="hidden" name="_method" value="DELETE" />
+                      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <% if versions.count > 5 %>
+            <a href="<%= url("/gems/#{name}") %>" id="more_link">Older versions...</a>
+          <% end %>
+        <%# </div> %>
+
+        <div class="details panel-footer">
+          <p>
+            <% newest_gem = versions.newest %>
+            <% if spec = spec_for(name, newest_gem.number, newest_gem.platform) %>
+              <%= spec.description %>
+              <br/>
+              <span class="author">– <%= spec.authors.map do |author|
+                "<a href='#{spec.homepage}'>#{author}</a>"
+              end.join(', ') %></span>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
