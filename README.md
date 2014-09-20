@@ -6,7 +6,7 @@ A nice, clean theme for Geminabox based on Twitter Bootstrap
 
 Add this line to your application's Gemfile:
 
-    gem "geminabox-bootstrap3", github: "philtr/geminabox-bootstrap"
+    gem "geminabox-bootstrap3"
 
 And then execute:
 
