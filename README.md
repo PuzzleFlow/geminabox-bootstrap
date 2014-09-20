@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Screenshot
 
-![](http://ovenbits.philtr.net.s3.amazonaws.com/geminabox-bootstrap/screenshot.png)
+![](http://ovenbits.philtr.net.s3.amazonaws.com/geminabox-bootstrap/screenshot.png?v2)
 
 ## Contributing
 
