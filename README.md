@@ -6,7 +6,7 @@ A nice, clean theme for Geminabox based on Twitter Bootstrap
 
 Add this line to your application's Gemfile:
 
-    gem 'geminabox-bootstrap', github: "philtr/geminabox-bootstrap"
+    gem "geminabox-bootstrap3", github: "philtr/geminabox-bootstrap"
 
 And then execute:
 
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/geminabox-cleantheme/fork )
+1. Fork it (<https://github.com/philtr/geminabox-bootstrap/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

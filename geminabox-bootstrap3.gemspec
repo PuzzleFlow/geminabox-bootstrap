@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'geminabox/bootstrap/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "geminabox-bootstrap"
+  spec.name          = "geminabox-bootstrap3"
   spec.version       = Geminabox::Bootstrap::VERSION
   spec.authors       = ["Phillip Ridlen"]
   spec.email         = ["phillip@ovenbits.com"]
