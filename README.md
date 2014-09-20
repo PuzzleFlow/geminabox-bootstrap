@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install geminabox-bootstrap
+    $ gem install geminabox-bootstrap3
 
 ## Screenshot
 
