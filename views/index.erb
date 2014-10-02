@@ -1,9 +1,32 @@
-<p>If you did not need any credentials to get to this page</p>
+<h3>Download From Repository</h3>
+
+<p>You can access gem files and perform deployment without any credentials.</p>
+
+<p>If you want to install gem from this repository:</p>
+<p><pre><code>gem install [gemname] --source=<%= url "/" %></code></pre></p>
+
+<p>Too add this repo permanently to your rubygems configuration:</p>
 <p><pre><code>gem sources -a <%= url "/" %></code></pre></p>
-<p>If you needed some credentials to get to this page</p>
-<p><pre><code>gem sources -a <%= url.to_s.gsub('://','://username:password@') %></code></pre></p>
-<p>and then ...</p>
-<p><pre><code>gem install geminabox<br />gem inabox [gemfile]</code></pre></p>
+
+<h3>Repository Manipulation</h3>
+
+<p>Gem repository manipulation is limited to authenticated users. PuzzleFlow Redmine account is required here.</p>
+
+<p>You'll be asked for user name and password when trying to upload new or delete gem.</p>
+
+<p>To pushing gem manually use server url with user credentials:</p>
+<p><pre><code>gem inabox [gemfile] -g <%= url.to_s.gsub('://','://[username]:[password]@') %></code></pre></p>
+<p>or with Redmine account key:</p>
+<p><pre><code>gem inabox [gemfile] -g <%= url.to_s.gsub('://','://key:[account_key]@') %></code></pre></p>
+
+<h3>Gem Release</h3>
+
+<p>All PuzzleFlow gems are integrated with this repository using hoe and hoe-puzzleflow plugin.</p>
+
+<p>The authorization is performed using Redmine account key:</p>
+<p><pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
+
+<p>You can permanently set <code>REDMINE_KEY</code> in your system environment variables.</p>
 
 <% if @gems.any? %>
   <div id="alpha_index"><ul class="pagination"><%= ("a".."z").map{|i| @index_gems.include?(i) ? "<li><a href='#jump_#{i}'>#{i}</a></li>" : "<li class='disabled'><a>#{i}</a></li>" }.join %></ul></div>
