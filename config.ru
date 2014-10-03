@@ -12,7 +12,7 @@ require "geminabox/bootstrap"
 Geminabox.data = File.expand_path("../geminabox-data", __FILE__)
 Geminabox.build_legacy = false
 
-logger = Logger.new(File.expand_path('../geminabox.log', __FILE__))
+logger = Logger.new(File.expand_path('../log/geminabox.log', __FILE__))
 
 class SimpleAuth
   REALM = "Please log in with your PuzzleFlow Redmine account"
