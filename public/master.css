@@ -1,11 +1,15 @@
 .upload {
-  text-align: center;
+	text-align: center;
 }
 
 #alpha_index {
-  text-align: center;
+	text-align: center;
 }
 
 .gemlist td.actions {
-  text-align: right;
+	text-align: right;
+}
+
+#repo-manipulation {
+	display: none;
 }

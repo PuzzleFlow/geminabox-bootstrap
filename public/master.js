@@ -40,7 +40,7 @@ $(document).ready(function documentInitialize() {
 
 	$(document).on("click", "#show-more-info", function showMoreInfo() {
 		$(this).hide();
-		$('#repo-manipulation').show('fast');
+		$('#repo-manipulation').show('normal');
 	});
 
 	$(document).on("click", "#gem-vendor-filter a", function toggleVendor(e) {
