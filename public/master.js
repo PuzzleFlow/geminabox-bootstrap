@@ -73,10 +73,10 @@ $(document).ready(function documentInitialize() {
 		if (search!='') {
 			selector += "[data-name*='"+search+"']";
 		}
+		$('.js-gem-version'+selector).fadeIn('fast');
 		if (selector!='') {
-			$('.js-gem-version').hide();
+			$('.js-gem-version').not(selector).fadeOut('fast');
 		}
-		$('.js-gem-version'+selector).show();
 	});
 
 	if(typeof(Storage) !== "undefined") {
