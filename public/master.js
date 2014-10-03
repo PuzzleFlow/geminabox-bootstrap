@@ -45,7 +45,7 @@ $(document).ready(function documentInitialize() {
 		$(".gemlist").trigger('filter');
 	});
 
-	$(document).on("keydown", "#gem-search", function toggleSearch() {
+	$(document).on("keyup", "#gem-search", function toggleSearch() {
 		$(".gemlist").trigger('filter');
 	});
 
@@ -55,10 +55,10 @@ $(document).ready(function documentInitialize() {
 
 		var selector = '';
 		if (vendor!='all') {
-			selector += '[data-vendor='+vendor+']'
+			selector += '[data-vendor='+vendor+']';
 		}
 		if (search!='') {
-			selector += '[data-name~='+search+']'
+			selector += "[data-name*='"+search+"']";
 		}
 		if (selector!='') {
 			$('.js-gem-version').hide();
