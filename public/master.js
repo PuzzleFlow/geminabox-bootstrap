@@ -1,12 +1,6 @@
 $(document).ready(function documentInitialize() {
 	var files;
 
-	if(typeof(Storage) !== "undefined") {
-		$("#gem-search").val(localStorage.gem_search_string);
-		var vendor = localStorage.gem_filter_vendor || 'all';
-		$("#gem-vendor-filter a[data-vendor="+vendor+"]").click();
-	}
-
 	$(document).on("change", "input[type='file']", function getFile() {
 		files = event.target.files;
 	});
@@ -84,4 +78,10 @@ $(document).ready(function documentInitialize() {
 		}
 		$('.js-gem-version'+selector).show();
 	});
+
+	if(typeof(Storage) !== "undefined") {
+		$("#gem-search").val(localStorage.gem_search_string);
+		var vendor = localStorage.gem_filter_vendor || 'all';
+		$("#gem-vendor-filter a[data-vendor="+vendor+"]").click();
+	}
 });
