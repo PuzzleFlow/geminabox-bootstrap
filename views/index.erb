@@ -12,7 +12,7 @@
 
 <a id="show-more-info">Show more information about repository manipulation...</a>
 
-<div id="repo-manipulation">
+<div id="repo-manipulation" class="hide">
 	<h3>Repository Manipulation</h3>
 
 	<p>Gem repository manipulation is limited to authenticated users. PuzzleFlow Redmine account is required here.</p>
@@ -41,6 +41,8 @@
 </div>
 
 <% if @gems.any? %>
+	<h3>Browse Repository</h3>
+
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -65,7 +67,6 @@
 		</div>
 	</nav>
 
-	<h3>Browse Repository</h3>
 	<div class="gemlist">
 
 		<% @gems.by_name do |name, versions| %>
