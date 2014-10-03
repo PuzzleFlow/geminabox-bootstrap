@@ -38,7 +38,15 @@ $(document).ready(function documentInitialize() {
 		return false;
 	});
 
-	$(document).on("click", "#gem-vendor-filter a", function toggleVendor() {
+	$(document).on("click", "#show-more-info", function showMoreInfo() {
+		$(this).hide();
+		$('#repo-manipulation').show('fast');
+	});
+
+	$(document).on("click", "#gem-vendor-filter a", function toggleVendor(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
 		var $this = $(this);
 		$("#gem-vendor-filter li").removeClass('active');
 		$this.parent('li').addClass('active');

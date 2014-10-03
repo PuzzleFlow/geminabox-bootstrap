@@ -10,31 +10,35 @@
 <p>
 <pre><code>gem sources -a <%= url "/" %></code></pre></p>
 
-<h3>Repository Manipulation</h3>
+<a id="show-more-info">Show more information about repository manipulation...</a>
 
-<p>Gem repository manipulation is limited to authenticated users. PuzzleFlow Redmine account is required here.</p>
+<div id="repo-manipulation">
+	<h3>Repository Manipulation</h3>
 
-<p>You'll be asked for user name and password when trying to upload new or delete gem through the web site.</p>
+	<p>Gem repository manipulation is limited to authenticated users. PuzzleFlow Redmine account is required here.</p>
 
-<p>To push gem with command line use gem inabox command with option --pf (--puzzleflow):</p>
-<p>
-<pre><code>gem inabox [gemfile] --pf</code></pre></p>
+	<p>You'll be asked for user name and password when trying to upload new or delete gem through the web site.</p>
 
-<p>You will be asked for your personal Redmine account key, which would be used for authrization.</p>
+	<p>To push gem with command line use gem inabox command with option --pf (--puzzleflow):</p>
+	<p>
+	<pre><code>gem inabox [gemfile] --pf</code></pre></p>
 
-<h3>Gem Release</h3>
+	<p>You will be asked for your personal Redmine account key, which would be used for authrization.</p>
 
-<p>All PuzzleFlow gems are integrated with this repository using hoe and hoe-puzzleflow plugin.</p>
-<p>The authorization is performed using Redmine account key.</p>
+	<h3>Gem Release</h3>
 
-<p>
-<pre><code>rake release VERSION=x.y.x</code></pre></p>
+	<p>All PuzzleFlow gems are integrated with this repository using hoe and hoe-puzzleflow plugin.</p>
+	<p>The authorization is performed using Redmine account key.</p>
 
-<p>The first time you run this command, you'll be asked for account key (gem inabox --pf is run internally).</p>
+	<p>
+	<pre><code>rake release VERSION=x.y.x</code></pre></p>
 
-<p>You can overwrite the redmine key with command variable <code>REDMINE_KEY</code>:</p>
-<p>
-<pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
+	<p>The first time you run this command, you'll be asked for account key (gem inabox --pf is run internally).</p>
+
+	<p>You can overwrite the redmine key with command variable <code>REDMINE_KEY</code>:</p>
+	<p>
+	<pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
+</div>
 
 <% if @gems.any? %>
 	<nav class="navbar navbar-default" role="navigation">
@@ -61,6 +65,7 @@
 		</div>
 	</nav>
 
+	<h3>Browse Repository</h3>
 	<div class="gemlist">
 
 		<% @gems.by_name do |name, versions| %>
