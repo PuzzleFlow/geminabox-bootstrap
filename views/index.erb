@@ -1,21 +1,24 @@
 <h3>Download From Repository</h3>
 
-<p>You can access gem files and perform deployment without any credentials.</p>
+<p>You can access gem files and perform application deployment without any credentials.</p>
 
 <p>If you want to install gem from this repository:</p>
-<p><pre><code>gem install [gemname] --source=<%= url "/" %></code></pre></p>
+<p>
+<pre><code>gem install [gemname] --source=<%= url "/" %></code></pre></p>
 
 <p>Too add this repo permanently to your rubygems configuration:</p>
-<p><pre><code>gem sources -a <%= url "/" %></code></pre></p>
+<p>
+<pre><code>gem sources -a <%= url "/" %></code></pre></p>
 
 <h3>Repository Manipulation</h3>
 
 <p>Gem repository manipulation is limited to authenticated users. PuzzleFlow Redmine account is required here.</p>
 
-<p>You'll be asked for user name and password when trying to upload new or delete gem.</p>
+<p>You'll be asked for user name and password when trying to upload new or delete gem through the web site.</p>
 
-<p>To push gem manually with gem command inabox use option --pf (--puzzleflow):</p>
-<p><pre><code>gem inabox [gemfile] --pf</code></pre></p>
+<p>To push gem with command line use gem inabox command with option --pf (--puzzleflow):</p>
+<p>
+<pre><code>gem inabox [gemfile] --pf</code></pre></p>
 
 <p>You will be asked for your personal Redmine account key, which would be used for authrization.</p>
 
@@ -24,63 +27,92 @@
 <p>All PuzzleFlow gems are integrated with this repository using hoe and hoe-puzzleflow plugin.</p>
 <p>The authorization is performed using Redmine account key.</p>
 
-<p><pre><code>rake release VERSION=x.y.x</code></pre></p>
+<p>
+<pre><code>rake release VERSION=x.y.x</code></pre></p>
 
 <p>The first time you run this command, you'll be asked for account key (gem inabox --pf is run internally).</p>
 
 <p>You can overwrite the redmine key with command variable <code>REDMINE_KEY</code>:</p>
-<p><pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
+<p>
+<pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
 
 <% if @gems.any? %>
-  <div id="alpha_index"><ul class="pagination"><%= ("a".."z").map{|i| @index_gems.include?(i) ? "<li><a href='#jump_#{i}'>#{i}</a></li>" : "<li class='disabled'><a>#{i}</a></li>" }.join %></ul></div>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<span class="navbar-brand" href="#">Gem List</span>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav" id="gem-vendor-filter">
+					<li class="active"><a href="#" data-vendor="all">All</a></li>
+					<li><a href="#" data-vendor="puzzleflow">PuzzleFlow</a></li>
+					<li><a href="#" data-vendor="vendor">Vendor</a></li>
+					<li></li>
+				</ul>
 
-  <div class="gemlist">
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" autofocus="" id="gem-search">
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
 
-    <% @gems.by_name do |name, versions| %>
-      <div class="panel panel-default" <%= %{id="jump_#{name[0..0].downcase}"} if @index_gems.delete(name[0..0].downcase) %> class="gem-version">
-        <div class="panel-heading"><h3 class="panel-title"><%= name %> (<%= versions.count == 1 ? versions.first.number : "#{versions.oldest.number} - #{versions.newest.number}" %>)</h3></div>
-        <%# <div class="panel-body"> %>
-          <table class="table">
-            <tbody>
-              <% versions.each.reverse_each.first(5).each do |version| %>
-                <tr>
-                  <td>
-                    <code>gem install <%= version.name %> <%= "--prerelease" if version.number.to_s.match(/[a-z]/i) %> -v "<%= version.number %>"</code>
-                    <% unless version.platform =~ /^ruby/i %>
-                      <small class="platform"><%= version.platform %></small>
-                    <% end %>
-                  </td>
-                  <td class="actions">
-                    <form class="delete-form" method="post" action="<%= url("/gems/#{version.gemfile_name}.gem") %>">
-                      <a class="download btn btn-sm btn-success" href="<%= url("/gems/#{version.gemfile_name}.gem") %>">Download</a>
-                      <input type="hidden" name="_method" value="DELETE" />
-                      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+	<div class="gemlist">
 
-          <% if versions.count > 5 %>
-            <a href="<%= url("/gems/#{name}") %>" id="more_link">Older versions...</a>
-          <% end %>
-        <%# </div> %>
+		<% @gems.by_name do |name, versions| %>
+			<% newest_gem = versions.newest %>
+			<% spec = spec_for(name, newest_gem.number, newest_gem.platform) %>
+			<div class="panel panel-default js-gem-version" <%= %{id="jump_#{name[0..0].downcase}"} if @index_gems.delete(name[0..0].downcase) %>
+					 data-vendor="<%= spec && spec.authors.find {|a| a =~ /puzzle|bigaj/i } ? 'puzzleflow' : 'vendor' %>" data-name="<%= name.downcase %>">
+				<div class="panel-heading"><h3 class="panel-title"><%= name %>
+					(<%= versions.count == 1 ? versions.first.number : "#{versions.oldest.number} - #{versions.newest.number}" %>
+					)</h3></div>
+				<%# <div class="panel-body"> %>
+				<table class="table">
+					<tbody>
+					<% versions.each.reverse_each.first(5).each do |version| %>
+						<tr>
+							<td>
+								<code>gem install <%= version.name %> <%= "--prerelease" if version.number.to_s.match(/[a-z]/i) %> -v
+									"<%= version.number %>"</code>
+								<% unless version.platform =~ /^ruby/i %>
+									<small class="platform"><%= version.platform %></small>
+								<% end %>
+							</td>
+							<td class="actions">
+								<form class="delete-form" method="post" action="<%= url("/gems/#{version.gemfile_name}.gem") %>">
+									<a class="download btn btn-sm btn-success" href="<%= url("/gems/#{version.gemfile_name}.gem") %>">Download</a>
+									<input type="hidden" name="_method" value="DELETE"/>
+									<button class="btn btn-danger btn-sm" type="submit">Delete</button>
+								</form>
+							</td>
+						</tr>
+					<% end %>
+					</tbody>
+				</table>
 
-        <div class="details panel-footer">
-          <p>
-            <% newest_gem = versions.newest %>
-            <% if spec = spec_for(name, newest_gem.number, newest_gem.platform) %>
-              <%= spec.description %>
-              <br/>
+				<% if versions.count > 5 %>
+					<a href="<%= url("/gems/#{name}") %>" id="more_link">Older versions...</a>
+				<% end %>
+				<%# </div> %>
+
+				<div class="details panel-footer">
+					<p>
+						<% if spec %>
+							<%= spec.description %>
+							<br/>
               <span class="author">– <%= spec.authors.map do |author|
-                "<a href='#{spec.homepage}'>#{author}</a>"
-              end.join(', ') %></span>
-            <% end %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-  </div>
+								"<a href='#{spec.homepage}'>#{author}</a>"
+							end.join(', ') %></span>
+						<% end %>
+					</p>
+				</div>
+			</div>
+		<% end %>
+	</div>
 <% end %>
 
