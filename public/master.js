@@ -2,12 +2,9 @@ $(document).ready(function documentInitialize() {
 	var files;
 
 	if(typeof(Storage) !== "undefined") {
-		if (localStorage.gem_search_string) {
-			$("#gem-search").val(localStorage.gem_search_string).keyup();
-		}
-		if (localStorage.gem_filter_vendor) {
-			$("#gem-vendor-filter a[data-vendor="+localStorage.gem_filter_vendor+"]").click();
-		}
+		$("#gem-search").val(localStorage.gem_search_string);
+		var vendor = localStorage.gem_filter_vendor || 'all';
+		$("#gem-vendor-filter a[data-vendor="+vendor+"]").click();
 	}
 
 	$(document).on("change", "input[type='file']", function getFile() {
