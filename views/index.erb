@@ -14,19 +14,22 @@
 
 <p>You'll be asked for user name and password when trying to upload new or delete gem.</p>
 
-<p>To pushing gem manually use server url with user credentials:</p>
-<p><pre><code>gem inabox [gemfile] -g <%= url.to_s.gsub('://','://[username]:[password]@') %></code></pre></p>
-<p>or with Redmine account key:</p>
-<p><pre><code>gem inabox [gemfile] -g <%= url.to_s.gsub('://','://key:[account_key]@') %></code></pre></p>
+<p>To push gem manually with gem command inabox use option --pf (--puzzleflow):</p>
+<p><pre><code>gem inabox [gemfile] --pf</code></pre></p>
+
+<p>You will be asked for your personal Redmine account key, which would be used for authrization.</p>
 
 <h3>Gem Release</h3>
 
 <p>All PuzzleFlow gems are integrated with this repository using hoe and hoe-puzzleflow plugin.</p>
+<p>The authorization is performed using Redmine account key.</p>
 
-<p>The authorization is performed using Redmine account key:</p>
+<p><pre><code>rake release VERSION=x.y.x</code></pre></p>
+
+<p>The first time you run this command, you'll be asked for account key (gem inabox --pf is run internally).</p>
+
+<p>You can overwrite the redmine key with command variable <code>REDMINE_KEY</code>:</p>
 <p><pre><code>rake release VERSION=x.y.x <strong>REDMINE_KEY=[account_key]</strong></code></pre></p>
-
-<p>You can permanently set <code>REDMINE_KEY</code> in your system environment variables.</p>
 
 <% if @gems.any? %>
   <div id="alpha_index"><ul class="pagination"><%= ("a".."z").map{|i| @index_gems.include?(i) ? "<li><a href='#jump_#{i}'>#{i}</a></li>" : "<li class='disabled'><a>#{i}</a></li>" }.join %></ul></div>
