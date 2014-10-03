@@ -1,6 +1,15 @@
 $(document).ready(function documentInitialize() {
 	var files;
 
+	if(typeof(Storage) !== "undefined") {
+		if (localStorage.gem_search_string) {
+			$("#gem-search").val(localStorage.gem_search_string).keyup();
+		}
+		if (localStorage.gem_filter_vendor) {
+			$("#gem-vendor-filter a[data-vendor="+localStorage.gem_filter_vendor+"]").click();
+		}
+	}
+
 	$(document).on("change", "input[type='file']", function getFile() {
 		files = event.target.files;
 	});
@@ -60,6 +69,11 @@ $(document).ready(function documentInitialize() {
 	$(document).on("filter", ".gemlist", function filterGemList() {
 		var vendor = $("#gem-vendor-filter li.active a").attr('data-vendor');
 		var search = $("#gem-search").val().toLowerCase();
+
+		if(typeof(Storage) !== "undefined") {
+			localStorage.gem_filter_vendor = vendor;
+			localStorage.gem_search_string = search;
+		}
 
 		var selector = '';
 		if (vendor!='all') {
